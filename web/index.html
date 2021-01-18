@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+    David Fung
+    CST 4713 - OL70
+    Project - Fall 2020
+-->
+<html>
+    <head>
+        <!-- Download jQuery from Google CDN -->
+        <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type = "text/javascript">
+            {
+                function runjQuery()
+                {
+                    //1. Reading selected radio button using jQuery
+                    var selectedButton = $("input[id = 'nbaRB']:checked").val();
+
+                    $.ajax(
+                    {
+                        //2. Set parameters for connection
+                        url:    "searchdb.jsp",
+                        data:   "rbKey="+selectedButton,   //Data passed to the JSP server (rbvalueKey is for request.getParameter)
+                        success:    function (serverdata)   //What the JSP server sends back 
+                        {
+                            //3. Display serverdata in the placeholder showresults
+                            $("#showresults").html(serverdata)
+                        }
+                    });
+
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <h2>NBA Statistics</h2>
+        <input type = "radio" id = "nbaRB" name = "nbaRB" value = "allTeamInfo" onclick = "runjQuery()"/> Information On All Teams <br/>
+        <input type = "radio" id = "nbaRB" name = "nbaRB" value = "oldestTeams"  onclick = "runjQuery()"/> Top Five Oldest Teams <br/>
+        <input type = "radio" id = "nbaRB" name = "nbaRB" value = "recentlyFound"  onclick = "runjQuery()"/> Top Five Most Recently Founded Teams <br/>
+        <input type = "radio" id = "nbaRB" name = "nbaRB" value = "mostWin"  onclick = "runjQuery()"/> Team Won The Most Championship <br/>
+        <input type = "radio" id = "nbaRB" name = "nbaRB" value = "winYears"  onclick = "runjQuery()"/> Team(s) That Won The NBA Championship In 1970, 1980, And 1990 <br/>
+        <p></p>
+        <h2>Results</h2>
+        <div id = "showresults"></div>
+    </body>
+</html>
